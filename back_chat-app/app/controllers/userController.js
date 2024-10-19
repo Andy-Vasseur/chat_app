@@ -1,13 +1,34 @@
-// Controller
+// Imports
+const dataMapper = require("../data/dataMapper");
+
 const userController = {
-  createNewUser: async (req, res) => {
+  logInUser: async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
     try {
-      res.send("Hello World!");
+      const result = await dataMapper.logInUser(username, password);
+      res.json(result);
     } catch (error) {
-      console.error(error);
-      res
-        .status(500)
-        .send(`An error occured with the database :\n${error.message}`);
+      res.status(500).json(error.toString());
+    }
+  },
+
+  createNewUser: async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    console.log(username, password, confirmPassword);
+
+    if (password !== confirmPassword) {
+      res.status(400).json("Passwords do not match");
+      return;
+    }
+
+    try {
+      const result = await dataMapper.createNewUser(username, password);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json(error.toString());
     }
   },
 };

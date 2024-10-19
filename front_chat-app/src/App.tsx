@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 // Pages
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 // Context
 import { AuthProvider } from "./context/Auth";
@@ -23,6 +24,7 @@ function App() {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/*" element={<h1>404 - Not Found</h1>} />
         </Routes>
       </div>

@@ -8,7 +8,8 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 // Routes
-router.get("/create", userController.createNewUser);
+router.get("/auth/login", userController.logInUser);
+router.post("/auth/create", userController.createNewUser);
 
 // Exports
 module.exports = router;
