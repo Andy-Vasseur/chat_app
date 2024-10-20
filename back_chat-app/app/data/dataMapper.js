@@ -14,7 +14,7 @@ const dataMapper = {
 
   async createNewUser(username, password) {
     const query = {
-      text: `INSERT INTO "users" (name, password) VALUES ($1, $2);`,
+      text: `INSERT INTO "users" (name, password) VALUES ($1, $2) RETURNING id;`,
       values: [username, password],
     };
     const result = await client.query(query);

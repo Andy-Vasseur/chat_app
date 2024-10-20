@@ -24,7 +24,8 @@ function Login() {
         }
       );
 
-      if (response.status === 200 && response.data.success) {
+      if (response.status === 200 && response.data.token) {
+        localStorage.setItem("token", response.data.token);
         login();
         navigate("/");
       } else {

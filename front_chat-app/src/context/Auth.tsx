@@ -1,30 +1,46 @@
 // Imports
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
 
-// AuthContextType
 interface AuthContextType {
   isUserLoggedIn: boolean;
   login: () => void;
   logout: () => void;
 }
 
-// AuthContext
 export const AuthContext = createContext<AuthContextType>({
   isUserLoggedIn: false,
   login: () => {},
   logout: () => {},
 });
 
-// AuthProvider
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  //  Functions
+  useEffect(() => {
+    const checkToken = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+    };
+
+    checkToken();
+
+    window.addEventListener("storage", checkToken);
+
+    return () => {
+      window.removeEventListener("storage", checkToken);
+    };
+  }, []);
+
   const login = () => {
     setIsUserLoggedIn(true);
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
     setIsUserLoggedIn(false);
   };
 
