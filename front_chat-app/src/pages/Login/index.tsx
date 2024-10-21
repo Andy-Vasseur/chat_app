@@ -27,7 +27,7 @@ function Login() {
       if (response.status === 200 && response.data.token) {
         localStorage.setItem("token", response.data.token);
         login();
-        navigate("/");
+        navigate("/dashboard");
       } else {
         setError("Identifiants incorrects.");
       }
@@ -37,7 +37,7 @@ function Login() {
   };
 
   return (
-    <div className="flex w-full h-full flex-col select-none ">
+    <div className="flex justify-center items-center w-full h-screen flex-col select-none">
       <div className="flex flex-col justify-center items-center h-full">
         <form
           method="POST"
@@ -53,7 +53,7 @@ function Login() {
             type="text"
             placeholder="Votre nom d'utilisateur"
             name="username"
-            className="mt-6 p-2 w-full h-12 border border-gray-300 rounded-md focus:outline-none focus:border-[#ffa40a]"
+            className="mt-6 p-2 w-full h-12 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -61,11 +61,11 @@ function Login() {
             type="password"
             placeholder="Votre mot de passe"
             name="password"
-            className="mt-6 p-2 w-full h-12 border border-gray-300 rounded-md focus:outline-none focus:border-[#ffa40a]"
+            className="mt-6 p-2 w-full h-12 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="w-full p-2 mt-4 bg-[#ffa40a] text-white rounded-md transition-colors duration-200 ease-in-out hover:bg-[#ff8c00] focus:outline-none">
+          <button className="w-full p-2 mt-4 bg-blue-500 text-white rounded-md transition-colors duration-200 ease-in-out hover:bg-indigo-700 focus:outline-none">
             Se connecter
           </button>
         </form>
@@ -74,5 +74,4 @@ function Login() {
   );
 }
 
-// Exports
 export default Login;

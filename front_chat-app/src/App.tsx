@@ -1,36 +1,74 @@
-// Imports
-import { Routes, Route } from "react-router-dom";
-
-// Pages
-import Homepage from "./pages/Homepage";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+// App.tsx
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
 
 // Context
-import { AuthProvider } from "./context/Auth";
+import { AuthContext } from "./context/Auth";
 import ProtectedRoute from "./context/ProtectedRoute";
 
+// Pages
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import Homepage from "./pages/Homepage";
+
 function App() {
+  const { isUserLoggedIn } = useContext(AuthContext);
+
   return (
-    <AuthProvider>
-      <div className="App h-screen min-h-screen max-h-screen bg-[#f6f6f6]">
-        <Routes>
-          <Route
-            index
-            element={
-              <ProtectedRoute>
-                <Homepage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/*" element={<h1>404 - Not Found</h1>} />
-        </Routes>
-      </div>
-    </AuthProvider>
+    <div className="App">
+      <Routes>
+        {/* Route pour la homepage ou redirection vers Dashboard */}
+        <Route
+          path="/"
+          element={
+            isUserLoggedIn || localStorage.getItem("token") ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Homepage />
+            )
+          }
+        />
+
+        {/* Redirection vers dashboard si connecté, sinon login */}
+        <Route
+          path="/login"
+          element={
+            isUserLoggedIn || localStorage.getItem("token") ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Login />
+            )
+          }
+        />
+
+        {/* Redirection vers dashboard si connecté, sinon signup */}
+        <Route
+          path="/signup"
+          element={
+            isUserLoggedIn || localStorage.getItem("token") ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Signup />
+            )
+          }
+        />
+
+        {/* Route protégée pour Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Redirige toutes les routes inconnues vers la homepage */}
+        <Route path="/*" element={<Navigate to="/" />} />
+      </Routes>
+    </div>
   );
 }
 
-// Exports
 export default App;
