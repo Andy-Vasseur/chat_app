@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 
 const userController = {
   logInUser: async (req, res) => {
-    const username = req.body.username;
+    const username = req.body.name;
     const password = req.body.password;
+    console.log(username, password);
     try {
       const result = await dataMapper.logInUser(username, password);
 
