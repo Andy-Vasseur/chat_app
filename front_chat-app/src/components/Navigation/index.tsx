@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Logo from "/img/logo.png";
 
 function Navigation() {
-  // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
