@@ -80,9 +80,9 @@ function Homepage() {
         </div>
       </div>
 
-      <div className="w-full bg-gray-800 py-8">
+      <div className="py-8 w-full bg-[#1c1c1c]">
         <div className="container mx-auto text-center">
-          <p className="text-gray-400">
+          <p className="text-white">
             © {new Date().getFullYear()} Chat'App. Tous droits réservés.
           </p>
         </div>
