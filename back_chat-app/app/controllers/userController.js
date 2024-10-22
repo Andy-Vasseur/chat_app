@@ -1,16 +1,24 @@
 // Imports
 const dataMapper = require("../data/dataMapper");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const userController = {
   logInUser: async (req, res) => {
     const username = req.body.name;
     const password = req.body.password;
-    console.log(username, password);
     try {
       const result = await dataMapper.logInUser(username, password);
 
       if (result.length === 0) {
+        return res.status(401).json("Invalid credentials");
+      }
+
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        result[0].password
+      );
+      if (!isPasswordValid) {
         return res.status(401).json("Invalid credentials");
       }
 
@@ -37,7 +45,10 @@ const userController = {
     }
 
     try {
-      const result = await dataMapper.logInUser(username, password);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const result = await dataMapper.createNewUser(username, hashedPassword);
 
       if (result.length === 0) {
         return res.status(401).json("Invalid credentials");

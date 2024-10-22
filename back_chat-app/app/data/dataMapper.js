@@ -1,21 +1,20 @@
 // Imports
 const client = require("./database");
 
-// DataMapper
 const dataMapper = {
-  async logInUser(username, password) {
+  async logInUser(username) {
     const query = {
-      text: `SELECT * FROM "users" WHERE name = $1 AND password = $2;`,
-      values: [username, password],
+      text: `SELECT * FROM "users" WHERE name = $1;`,
+      values: [username],
     };
     const result = await client.query(query);
     return result.rows;
   },
 
-  async createNewUser(username, password) {
+  async createNewUser(username, hashedPassword) {
     const query = {
       text: `INSERT INTO "users" (name, password) VALUES ($1, $2) RETURNING id;`,
-      values: [username, password],
+      values: [username, hashedPassword],
     };
     const result = await client.query(query);
     return result.rows;
