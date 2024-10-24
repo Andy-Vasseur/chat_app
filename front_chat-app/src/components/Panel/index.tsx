@@ -1,12 +1,16 @@
-// Props
-interface PanelProps {
-  children: React.ReactNode;
-}
+// Imports
+import { Outlet } from "react-router-dom";
 
-function Panel({ children }: PanelProps) {
+function Panel() {
   return (
     <div className="p-4 w-5/6 bg-gray-200">
-      <div className="pt-2">{children}</div>
+      <div className="pt-2">
+        <h1>Panel</h1>
+
+        <div className="mt-4">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 }

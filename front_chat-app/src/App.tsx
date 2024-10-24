@@ -1,4 +1,3 @@
-// App.tsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 
@@ -11,6 +10,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
+import Room from "./components/Room";
 
 function App() {
   const { isUserLoggedIn } = useContext(AuthContext);
@@ -54,7 +54,7 @@ function App() {
           }
         />
 
-        {/* Route protégée pour Dashboard */}
+        {/* Route protégée pour Dashboard avec des routes imbriquées */}
         <Route
           path="/dashboard"
           element={
@@ -62,7 +62,10 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           }
-        />
+        >
+          {/* Route dynamique pour les rooms imbriquées dans le Dashboard */}
+          <Route path="rooms/:room_id" element={<Room />} />
+        </Route>
 
         {/* Redirige toutes les routes inconnues vers la homepage */}
         <Route path="/*" element={<Navigate to="/" />} />
@@ -71,4 +74,5 @@ function App() {
   );
 }
 
+// Exports
 export default App;

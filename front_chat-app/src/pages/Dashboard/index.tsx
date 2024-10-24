@@ -1,4 +1,4 @@
-// Imports
+// Components
 import Navigation from "../../components/Navigation";
 import Panel from "../../components/Panel";
 
