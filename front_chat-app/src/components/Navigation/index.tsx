@@ -80,7 +80,7 @@ function Navigation() {
       </Link>
       <button
         onClick={handleModalOpen}
-        className="flex justify-center-start items-center mb-4 p-2 w-full rounded-lg hover:underline hover:underline-offset-8"
+        className="flex justify-center items-center mb-4 p-2 w-full rounded-lg hover:underline hover:underline-offset-8"
       >
         Créer une room
       </button>

@@ -1,7 +1,14 @@
 // Imports
 import { useState, useEffect } from "react";
 
-function Modal({ isOpen, onClose, title, children }) {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}
+
+function Modal({ isOpen, onClose, title, children }: ModalProps) {
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
