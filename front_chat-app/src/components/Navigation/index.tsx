@@ -1,6 +1,6 @@
 // Imports
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Components
@@ -11,11 +11,25 @@ import Logo from "/img/logo.png";
 
 function Navigation() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rooms, setRooms] = useState([]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
+  const fetchRoomsFromAPI = async () => {
+    try {
+      const response = await axios.get("http://localhost:3310/rooms/get", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setRooms(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    fetchRoomsFromAPI();
+  }, []);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -50,6 +64,10 @@ function Navigation() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   return (
     <nav className="relative p-4 w-1/6 text-white bg-[#1c1c1c]">
       <Link
@@ -60,15 +78,22 @@ function Navigation() {
           <img src={Logo} alt="Logo" className="w-36" />
         </div>
       </Link>
+      <button
+        onClick={handleModalOpen}
+        className="flex justify-center-start items-center mb-4 p-2 w-full rounded-lg hover:underline hover:underline-offset-8"
+      >
+        Créer une room
+      </button>
       <ul className="flex flex-col space-y-4">
-        <li>
-          <button
-            onClick={handleModalOpen}
+        {rooms.map((room: any) => (
+          <Link
+            to={`/room/${room.room_id}`}
+            key={room.room_id}
             className="flex justify-items-start items-center p-2 w-full rounded-lg transition-colors duration-200 ease-in-out hover:bg-[#2c2c2c]"
           >
-            Créer une room
-          </button>
-        </li>
+            {room.name}
+          </Link>
+        ))}
       </ul>
       <div className="absolute bottom-0 left-0 right-0 my-4 px-4 w-full">
         <button
