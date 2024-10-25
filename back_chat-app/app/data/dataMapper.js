@@ -51,6 +51,17 @@ const dataMapper = {
     const result = await client.query(query);
     return result.rows;
   },
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // MESSAGES
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async createMessage(message, roomId, userId) {
+    const query = {
+      text: `INSERT INTO "messages" (room_id, user_id, message) VALUES ($1, $2, $3);`,
+      values: [roomId, userId, message],
+    };
+    const result = await client.query(query);
+    return result.rows;
+  },
 };
 
 // Exports

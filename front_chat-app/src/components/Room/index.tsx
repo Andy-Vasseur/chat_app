@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Room() {
   const { room_id } = useParams();
+  const user_id = localStorage.getItem("user_id");
 
   const sendMessage = async (event: any) => {
     event.preventDefault();
@@ -15,6 +16,7 @@ function Room() {
       await axios.post("http://localhost:3310/messages/create", {
         message,
         room_id,
+        user_id,
       });
     } catch (error) {
       console.error(error);
@@ -25,7 +27,7 @@ function Room() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold">{room_id}</h1>
+        <h1 className="text-2xl font-bold">Salle {room_id}</h1>
       </div>
       <div>
         <form onSubmit={sendMessage}>

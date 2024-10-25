@@ -8,7 +8,7 @@ const messageController = require("../controllers/messageController");
 const router = express.Router();
 
 // Routes
-router.post("/create", messageController.createMessage);
+router.post("/create", messageController.createNewMessage);
 
 // Exports
 module.exports = router;

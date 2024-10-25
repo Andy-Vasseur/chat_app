@@ -1,13 +1,22 @@
-// Controller
+// Imports
+const dataMapper = require("../data/dataMapper");
+
 const messageController = {
-  createMessage: async (req, res) => {
+  createNewMessage: async (req, res) => {
+    const message = req.body.message;
+    const roomId = req.body.room_id;
+    const userId = req.body.user_id;
+    console.log(`Message: ${message}, Room ID: ${roomId}, User ID: ${userId}`);
     try {
-      res.send("Hello World!");
+      const newMessage = await dataMapper.createMessage(
+        message,
+        roomId,
+        userId
+      );
+      res.json(newMessage);
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .send(`An error occured with the database :\n${error.message}`);
+      res.status(500).json(error);
     }
   },
 };
