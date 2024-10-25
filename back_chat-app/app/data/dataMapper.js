@@ -26,6 +26,23 @@ const dataMapper = {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ROOMS
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async getRooms() {
+    const query = {
+      text: `SELECT * FROM "rooms";`,
+    };
+    const result = await client.query(query);
+    return result.rows;
+  },
+
+  async roomById(id) {
+    const query = {
+      text: `SELECT * FROM "rooms" WHERE room_id = $1;`,
+      values: [id],
+    };
+    const result = await client.query(query);
+    return result.rows;
+  },
+
   async createRoom(name) {
     const query = {
       text: `INSERT INTO "rooms" (name) VALUES ($1);`,
