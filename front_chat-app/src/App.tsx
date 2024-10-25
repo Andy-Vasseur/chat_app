@@ -64,7 +64,7 @@ function App() {
           }
         >
           {/* Route dynamique pour les rooms imbriquées dans le Dashboard */}
-          <Route path="rooms/:room_id" element={<Room />} />
+          <Route path="rooms/:roomName" element={<Room />} />
         </Route>
 
         {/* Redirige toutes les routes inconnues vers la homepage */}

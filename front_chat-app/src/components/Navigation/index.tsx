@@ -87,7 +87,7 @@ function Navigation() {
       <ul className="flex flex-col space-y-4">
         {rooms.map((room: any) => (
           <Link
-            to={`/dashboard/rooms/${room.room_id}`}
+            to={`/dashboard/rooms/${room.name}`}
             key={room.room_id}
             className="flex justify-items-start items-center p-2 w-full rounded-lg transition-colors duration-200 ease-in-out hover:bg-[#2c2c2c]"
           >

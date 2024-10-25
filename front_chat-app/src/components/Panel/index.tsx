@@ -5,8 +5,6 @@ function Panel() {
   return (
     <div className="p-4 w-5/6 bg-gray-200">
       <div className="pt-2">
-        <h1>Panel</h1>
-
         <div className="mt-4">
           <Outlet />
         </div>
