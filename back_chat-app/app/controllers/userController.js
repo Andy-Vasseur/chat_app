@@ -22,13 +22,15 @@ const userController = {
         return res.status(401).json("Invalid credentials");
       }
 
+      const userId = result[0].user_id;
+
       const token = jwt.sign(
         { username: result[0].name, userId: result[0].id },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-
-      res.json({ token });
+      res.json({ token, userId });
+      console.log(userId);
     } catch (error) {
       res.status(500).json(error.toString());
     }
