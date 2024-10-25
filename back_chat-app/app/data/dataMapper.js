@@ -54,6 +54,15 @@ const dataMapper = {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // MESSAGES
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async messagesByRoom(roomId) {
+    const query = {
+      text: `SELECT * FROM "messages" WHERE room_id = $1;`,
+      values: [roomId],
+    };
+    const result = await client.query(query);
+    return result.rows;
+  },
+
   async createMessage(message, roomId, userId) {
     const query = {
       text: `INSERT INTO "messages" (room_id, user_id, message) VALUES ($1, $2, $3);`,

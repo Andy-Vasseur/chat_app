@@ -27,7 +27,6 @@ function Login() {
       if (response.status === 200 && response.data.token) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user_id", response.data.userId);
-        console.log(response.data);
         login();
         navigate("/dashboard");
       } else {

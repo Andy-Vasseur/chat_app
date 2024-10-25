@@ -30,7 +30,6 @@ const userController = {
         { expiresIn: "1h" }
       );
       res.json({ token, userId });
-      console.log(userId);
     } catch (error) {
       res.status(500).json(error.toString());
     }

@@ -8,6 +8,7 @@ const messageController = require("../controllers/messageController");
 const router = express.Router();
 
 // Routes
+router.get("/get/:id", messageController.getMessagesByRoom);
 router.post("/create", messageController.createNewMessage);
 
 // Exports
