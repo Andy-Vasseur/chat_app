@@ -11,7 +11,7 @@ function Room() {
   const [messages, setMessages] = useState<
     { user_id: string; message: string }[]
   >([]);
-  const user_id = localStorage.getItem("user_id");
+  const user_id = localStorage.getItem("user_id") || "";
 
   useEffect(() => {
     socket.emit("join_room", room_id);
@@ -39,6 +39,10 @@ function Room() {
 
   const sendMessage = async (event: any) => {
     event.preventDefault();
+    if (!user_id) {
+      console.error("User ID non défini");
+      return;
+    }
     const message = event.target.elements.message.value;
     if (!message) return;
 
@@ -50,7 +54,6 @@ function Room() {
 
     try {
       await axios.post("http://localhost:3310/messages/create", messageData);
-
       socket.emit("send_message", messageData);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
@@ -65,14 +68,16 @@ function Room() {
       </div>
       <div>
         <ul>
-          {messages.map((message: any, index: number) => (
-            <li key={index}>
-              <p>
-                {message.user_id === user_id ? "You" : "Other"}:{" "}
-                {message.message}
-              </p>
-            </li>
-          ))}
+          {messages.map((message, index) => {
+            return (
+              <li key={index}>
+                <p>
+                  {message.user_id.toString() === user_id ? "You" : "Other"}:{" "}
+                  {message.message}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div>
