@@ -8,7 +8,7 @@ const userController = {
     const username = req.body.name;
     const password = req.body.password;
     try {
-      const result = await dataMapper.logInUser(username, password);
+      const result = await dataMapper.logInUser(username);
 
       if (result.length === 0) {
         return res.status(401).json("Invalid credentials");
@@ -29,7 +29,8 @@ const userController = {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      res.json({ token, userId });
+
+      res.json({ token, userId, username: result[0].name });
     } catch (error) {
       res.status(500).json(error.toString());
     }

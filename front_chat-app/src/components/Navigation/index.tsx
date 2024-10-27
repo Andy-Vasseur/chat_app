@@ -67,6 +67,7 @@ function Navigation() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("username");
     window.location.href = "/";
   };
   return (

@@ -56,7 +56,13 @@ const dataMapper = {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async messagesByRoom(roomId) {
     const query = {
-      text: `SELECT * FROM "messages" WHERE room_id = $1;`,
+      text: `
+        SELECT messages.message, messages.user_id, users.name AS username, messages.timestamp
+        FROM messages
+        JOIN users ON messages.user_id = users.user_id
+        WHERE messages.room_id = $1
+        ORDER BY messages.timestamp ASC;  -- Trie par date croissante
+      `,
       values: [roomId],
     };
     const result = await client.query(query);

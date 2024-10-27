@@ -9,9 +9,10 @@ const socket = io("http://localhost:3310");
 function Room() {
   const { room_id } = useParams();
   const [messages, setMessages] = useState<
-    { user_id: string; message: string }[]
+    { user_id: string; message: string; username: string }[]
   >([]);
   const user_id = localStorage.getItem("user_id") || "";
+  const username = localStorage.getItem("username") || "";
 
   useEffect(() => {
     socket.emit("join_room", room_id);
@@ -54,7 +55,7 @@ function Room() {
 
     try {
       await axios.post("http://localhost:3310/messages/create", messageData);
-      socket.emit("send_message", messageData);
+      socket.emit("send_message", { ...messageData, username });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
@@ -68,16 +69,13 @@ function Room() {
       </div>
       <div>
         <ul>
-          {messages.map((message, index) => {
-            return (
-              <li key={index}>
-                <p>
-                  {message.user_id.toString() === user_id ? "You" : "Other"}:{" "}
-                  {message.message}
-                </p>
-              </li>
-            );
-          })}
+          {messages.map((message, index) => (
+            <li key={index}>
+              <p>
+                {message.username}: {message.message}
+              </p>
+            </li>
+          ))}
         </ul>
       </div>
       <div>
