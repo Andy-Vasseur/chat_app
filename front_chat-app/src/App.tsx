@@ -16,7 +16,7 @@ function App() {
   const { isUserLoggedIn } = useContext(AuthContext);
 
   return (
-    <div className="App">
+    <div className="App min-h-screen max-h-screen">
       <Routes>
         {/* Route pour la homepage ou redirection vers Dashboard */}
         <Route

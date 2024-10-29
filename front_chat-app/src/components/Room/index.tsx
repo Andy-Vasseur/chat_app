@@ -11,6 +11,7 @@ function Room() {
   const [messages, setMessages] = useState<
     { user_id: string; message: string; username: string }[]
   >([]);
+
   const user_id = localStorage.getItem("user_id") || "";
   const username = localStorage.getItem("username") || "";
 
@@ -63,28 +64,43 @@ function Room() {
   };
 
   return (
-    <div>
-      <div>
-        <h1 className="mb-4 text-2xl font-bold">{room_id}</h1>
+    <div className="flex flex-col justify-between items-center h-full">
+      <div className="flex justify-center items-center h-16 w-full bg-red-700">
+        <h1 className="text-3xl font-bold">Salle {room_id}</h1>
       </div>
-      <div>
+      <div className="w-full h-full overflow-y-auto bg-green-400 p-4">
         <ul>
           {messages.map((message, index) => (
-            <li key={index}>
-              <p>
-                {message.username}: {message.message}
-              </p>
+            <li
+              key={index}
+              className={`flex ${
+                message.user_id === user_id ? "justify-end" : "justify-start"
+              } mb-2`}
+            >
+              <div
+                className={`p-3 rounded-lg max-w-xs ${
+                  message.user_id === user_id
+                    ? "bg-blue-500 text-white text-right"
+                    : "bg-gray-200 text-black text-left"
+                }`}
+              >
+                <p className="text-sm font-semibold mb-1">{message.username}</p>
+                <p>{message.message}</p>
+              </div>
             </li>
           ))}
         </ul>
       </div>
-      <div>
-        <form onSubmit={sendMessage}>
+      <div className="w-full h-24 bg-blue-400">
+        <form
+          className="flex justify-between items-center w-full"
+          onSubmit={sendMessage}
+        >
           <input
             type="text"
             name="message"
             placeholder="Type a message..."
-            className="border-2 border-gray-300 p-2 w-full"
+            className="mr-8 w-full border-2 border-gray-300 p-2"
           />
           <button
             type="submit"
